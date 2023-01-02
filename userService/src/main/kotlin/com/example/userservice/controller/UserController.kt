@@ -6,6 +6,7 @@ import com.example.userservice.VO.RequestUser
 import com.example.userservice.dto.UserDto
 import com.example.userservice.service.UserService
 import lombok.RequiredArgsConstructor
+import org.slf4j.LoggerFactory
 
 
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/")
 class UserController (private val greeting: Greeting, private val userService: UserService){
+    val log = LoggerFactory.getLogger(UserController::class.java)
 //    @PostMapping
 //    fun createUser(@RequestBody user:RequestUser):String{
 //
@@ -29,7 +31,8 @@ class UserController (private val greeting: Greeting, private val userService: U
 
     @GetMapping("/health-check")
     fun status():String{
-        return "helath Check"
+        log.info("도착!!")
+        return "health Check"
     }
 
     @GetMapping("/welcome")
