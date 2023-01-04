@@ -7,21 +7,13 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class FilterConfig {
-//    @Bean
+    @Bean
     fun gatewayRoutes(builder: RouteLocatorBuilder): RouteLocator {
-        return builder.routes().route {
-            it.path("/first-service/**").filters { f ->
-                f.addRequestHeader("first-request", "first-request-header")
-                    .addResponseHeader("first-response", "first-response-header")
-            }.uri("lb://MY-FIRST-SERVICE")
-        }.route {
-            it.path("/second-service/**").filters { f ->
-                f.addRequestHeader("second-request", "second-request-header")
-                    .addResponseHeader("second-response", "second-response-header")
-            }.uri("lb://MY-SECOND-SERVICE")
-        }.route{
-            it.path("/user-service/**").uri("http://localhost:8010/")
-        }  .build()
+        return builder.routes().route{
+            it.path("/user-service/**").uri("lb://USER-SERVICE")
+        } .route{
+            it.path("/catalog-service/**").uri("lb://CATALOG-SERVICE")
+        } .build()
 
     }
 }

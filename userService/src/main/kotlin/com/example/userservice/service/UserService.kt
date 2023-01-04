@@ -12,4 +12,6 @@ import java.util.*
 
 interface UserService {
     fun createUser(userDto: UserDto)
+    fun getUserByAll():Iterable<UserEntity>
+    fun getUserByUserId(userId:String):UserDto?
 }
