@@ -13,7 +13,9 @@ class FilterConfig {
             it.path("/user-service/**").uri("lb://USER-SERVICE")
         } .route{
             it.path("/catalog-service/**").uri("lb://CATALOG-SERVICE")
-        } .build()
+        } .route{
+            it.path("/order-service/**").uri("lb://ORDER-SERVICE")
+        }.build()
 
     }
 }
