@@ -4,16 +4,12 @@ import com.example.userservice.Mapper.ModelMapper
 import com.example.userservice.VO.Greeting
 import com.example.userservice.VO.RequestUser
 import com.example.userservice.dto.UserDto
-import com.example.userservice.entity.ResponseUser
+import com.example.userservice.VO.ResponseUser
 import com.example.userservice.entity.UserEntity
 import com.example.userservice.service.UserService
-import lombok.RequiredArgsConstructor
-import org.apache.catalina.User
 import org.slf4j.LoggerFactory
 
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -35,13 +31,13 @@ class UserController (private val mapper:ModelMapper,private val greeting: Greet
         return "Create User method is Called"
     }
     @GetMapping("/users")
-    fun getUsers():ResponseEntity<List< ResponseUser>> =userService.getUserByAll().map{
-            mapper.mapper<UserEntity,ResponseUser>(it)
+    fun getUsers():ResponseEntity<List<ResponseUser>> =userService.getUserByAll().map{
+            mapper.mapper<UserEntity, ResponseUser>(it)
         }.let{ ResponseEntity.status(HttpStatus.OK).body(it)}
 
     @GetMapping("/users/{userId}")
     fun getUser(@PathVariable("userId") userId:String):ResponseEntity<ResponseUser> =
-        userService.getUserByUserId(userId)?.let { mapper.mapper<UserDto,ResponseUser>(it) }.let{
+        userService.getUserByUserId(userId)?.let { mapper.mapper<UserDto, ResponseUser>(it) }.let{
             ResponseEntity.status(HttpStatus.OK).body(it)
         }
 

@@ -1,16 +1,16 @@
 package com.example.userservice.dto
 
 import com.example.userservice.NoArg
-import com.example.userservice.entity.ResponseOrder
-import java.time.LocalDateTime
+import com.example.userservice.VO.ResponseOrder
+import java.util.Date
 
 @NoArg
 data class UserDto(
     var email: String,
-    var pwd: String,
+    var pwd: String?=null,
     var name: String,
     var userId: String,
-    var createdAt: LocalDateTime,
+    var createdAt: Date?=null,
     var encryptedPwd: String,
-    var orders:ArrayList<ResponseOrder>
+    var orders:ArrayList<ResponseOrder>?=null
 )

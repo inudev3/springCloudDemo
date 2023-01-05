@@ -10,11 +10,18 @@ class FilterConfig {
     @Bean
     fun gatewayRoutes(builder: RouteLocatorBuilder): RouteLocator {
         return builder.routes().route{
-            it.path("/user-service/**").uri("lb://USER-SERVICE")
+            it.path("/user-service/**").filters {
+                it.rewritePath("/user-service/(?<segment>.*)", "/\${segment}")
+            }.uri("lb://USER-SERVICE")
         } .route{
-            it.path("/catalog-service/**").uri("lb://CATALOG-SERVICE")
+            it.path("/catalog-service/**").filters {
+                it.rewritePath("/catalog-service/(?<segment>.*)", "/\${segment}")
+            }.uri("lb://CATALOG-SERVICE")
         } .route{
-            it.path("/order-service/**").uri("lb://ORDER-SERVICE")
+
+            it.path("/order-service/**").filters {
+                it.rewritePath("/order-service/(?<segment>.*)", "/\${segment}")
+            }.uri("lb://ORDER-SERVICE")
         }.build()
 
     }

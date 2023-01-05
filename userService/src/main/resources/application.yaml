@@ -15,7 +15,7 @@ spring:
 
 
   datasource:
-    url:  jdbc:h2:tcp://localhost/~/userService
+    url:  jdbc:h2:mem:testdb
     password:
     username: sa
     driver-class-name: org.h2.Driver

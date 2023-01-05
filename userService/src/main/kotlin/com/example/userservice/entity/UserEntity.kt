@@ -14,15 +14,15 @@ class UserEntity(
 )
 {
     @Column(nullable = false)
-    var email: String?=email
+    var email: String=email
     @Column( nullable = false, length = 50)
-    var name: String?   =name
+    var name: String   =name
 
 
-    var userId: String?=userId
+    var userId: String=userId
 
 
-    var encryptedPwd: String?=encryptedPwd
+    var encryptedPwd: String    =encryptedPwd
 
 }
 

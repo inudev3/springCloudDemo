@@ -6,6 +6,9 @@ import com.example.userservice.dto.UserDto
 import com.example.userservice.entity.UserEntity
 import com.example.userservice.repository.UserRepository
 import lombok.RequiredArgsConstructor
+import org.springframework.boot.autoconfigure.security.SecurityProperties
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 
@@ -18,6 +21,15 @@ import kotlin.collections.ArrayList
 @RequiredArgsConstructor
 @Service
 class UserServiceImpl(private val mapper: ModelMapper, private val userRepository: UserRepository, private val passwordEncoder: PasswordEncoder):UserService {
+    private fun userNotFound(message:String?="User Not Found"){
+        throw UsernameNotFoundException(message)
+    }
+
+    override fun loadUserByUsername(username: String?): UserDetails {
+        val userEntity =username?.let{userRepository.findByEmail(it)}
+        userEntity?: userNotFound()
+        return User(userEntity?.name,passwordEncoder.encode(userEntity?.encryptedPwd), true,true,true,true,ArrayList())
+    }
 
     override fun getUserByUserId(userId: String): UserDto {
         val userEntity=userRepository.findByUserId(userId)?:throw UsernameNotFoundException("User Not Found")
