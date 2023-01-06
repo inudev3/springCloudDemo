@@ -34,3 +34,7 @@ server:
 
 greeting:
   message: welcome to the simple e-commerce
+
+token:
+  expiration_time: 86400000
+  secret:

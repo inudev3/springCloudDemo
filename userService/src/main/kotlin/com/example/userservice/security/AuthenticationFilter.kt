@@ -41,7 +41,7 @@ class AuthenticationFilter (val userService: UserService, val env:Environment): 
         chain: FilterChain?,
         authResult: Authentication?
     ) {
-        val user =(authResult?.principal as? User) ?: throw UsernameNotFoundException("User Not Found")
+        val user =(authResult?.principal as? User) ?: throw RuntimeException("")
         val userDetails =  userService.getUserDetailsByEmail(user.username)
     }
 }
