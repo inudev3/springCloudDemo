@@ -11,6 +11,8 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+
+
 #
 #      routes:
 #        - id: user-service
@@ -43,3 +45,5 @@ spring:
             baseMessage : Spring Cloud Gateway GlobalFilter
             preLogger: true
             postLogger: true
+token:
+  secret: userTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserToken
