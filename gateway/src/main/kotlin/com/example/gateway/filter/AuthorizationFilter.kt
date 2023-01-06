@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
-import java.util.Base64.Encoder
+
 
 @Component
 class AuthorizationFilter(val env:Environment) :AbstractGatewayFilterFactory<AuthorizationFilter.Config>(AuthorizationFilter.Config::class.java) {
@@ -45,7 +45,7 @@ class AuthorizationFilter(val env:Environment) :AbstractGatewayFilterFactory<Aut
         }
         val subject = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(this).body.subject ?:return false
         if(subject.isEmpty()) return false
-
+        return true
     }
 
 
