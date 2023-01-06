@@ -24,11 +24,13 @@ import org.springframework.web.bind.annotation.RestController
 class UserController (private val mapper:ModelMapper,private val greeting: Greeting, private val userService: UserService){
     val log = LoggerFactory.getLogger(UserController::class.java)
     @PostMapping("/users")
-    fun createUser(@RequestBody user:RequestUser):String{
+    fun createUser(@RequestBody user:RequestUser):ResponseEntity<ResponseUser>{
 
         val userDto =mapper.mapper<RequestUser, UserDto>(user)
-        userService.createUser(userDto)
-        return "Create User method is Called"
+        val result= userService.createUser(userDto).let{
+            mapper.mapper<UserDto, ResponseUser>(it)
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result)
     }
     @GetMapping("/users")
     fun getUsers():ResponseEntity<List<ResponseUser>> =userService.getUserByAll().map{

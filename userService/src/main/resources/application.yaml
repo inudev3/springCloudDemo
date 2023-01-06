@@ -11,7 +11,7 @@ spring:
   jpa:
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
 
 
   datasource:
@@ -19,6 +19,7 @@ spring:
     password:
     username: sa
     driver-class-name: org.h2.Driver
+
 
 eureka:
   instance:

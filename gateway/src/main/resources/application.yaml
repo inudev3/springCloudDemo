@@ -11,26 +11,32 @@ spring:
     name: gateway-service
   cloud:
     gateway:
-#      routes:
-#        - id: first-service
-#          uri: lb://MY-FIRST-SERVICE
-#          predicates:
-#            - Path=/first-service/**
-#          filters:
-#            - name: CustomFilter
-#            - name: LoggingFilter
-#              args:
-#                baseMessage: Hi, there.
-#                preLogger: true
-#                postLogger: true
 #
-#        - id: second-service
-#          uri: lb://MY-SECOND-SERVICE
+#      routes:
+#        - id: user-service
+#          uri: lb://USER-SERVICE
 #          predicates:
-#            - Path=/second-service/**
+#            - Path=/user-service/login
+#            - Method=POST
 #          filters:
-#            - CustomFilter
-
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/users
+#            - Method=POST
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/**
+#            - Method=GET
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
       default-filters:
         - name: GlobalFilter
           args:

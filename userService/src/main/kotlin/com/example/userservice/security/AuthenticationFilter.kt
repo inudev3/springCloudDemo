@@ -1,21 +1,29 @@
 package com.example.userservice.security
 
 import com.example.userservice.VO.RequestLogin
+import com.example.userservice.service.UserService
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.beans.factory.annotation.Autowired
+
+import org.springframework.context.annotation.Bean
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.lang.RuntimeException
 
 
+
 class AuthenticationFilter : UsernamePasswordAuthenticationFilter() {
+
     override fun attemptAuthentication(request: HttpServletRequest?, response: HttpServletResponse?): Authentication {
         try {
             val creds = ObjectMapper().readValue(request?.inputStream, RequestLogin::class.java)
-            return UsernamePasswordAuthenticationToken(creds.email, creds.password, ArrayList()).let(
+            return UsernamePasswordAuthenticationToken(creds.email, creds.pwd, ArrayList()).let(
                 authenticationManager::authenticate
             )
 
@@ -31,6 +39,7 @@ class AuthenticationFilter : UsernamePasswordAuthenticationFilter() {
         chain: FilterChain?,
         authResult: Authentication?
     ) {
-        super.successfulAuthentication(request, response, chain, authResult)
+        val user =(authResult?.principal as? User)
+        logger.debug(user?.username)
     }
 }

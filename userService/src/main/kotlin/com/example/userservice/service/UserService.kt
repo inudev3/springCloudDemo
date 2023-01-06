@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 
-interface UserService:UserDetailsService {
-    fun createUser(userDto: UserDto)
+interface UserService{
+    fun createUser(userDto: UserDto):UserDto
     fun getUserByAll():Iterable<UserEntity>
     fun getUserByUserId(userId:String):UserDto?
 }

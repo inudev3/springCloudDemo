@@ -9,8 +9,8 @@ class UserEntity(
     var id: Long?=null ,
     email:String,
     name:String,
-    userId:String,
-    encryptedPwd:String
+    userId:String?,
+    encryptedPwd:String?
 )
 {
     @Column(nullable = false)
@@ -19,10 +19,10 @@ class UserEntity(
     var name: String   =name
 
 
-    var userId: String=userId
+    var userId: String?=userId
 
 
-    var encryptedPwd: String    =encryptedPwd
+    var encryptedPwd: String?=encryptedPwd
 
 }
 

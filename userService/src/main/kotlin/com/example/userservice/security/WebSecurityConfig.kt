@@ -1,6 +1,10 @@
 package com.example.userservice.security
 
+import com.example.userservice.repository.UserRepository
+import com.example.userservice.service.MyUserDetailsService
+import com.example.userservice.service.UserService
 import jakarta.servlet.http.HttpServletRequest
+import lombok.RequiredArgsConstructor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -11,36 +15,48 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.util.matcher.IpAddressMatcher
 import java.util.function.Supplier
 
 
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
+class WebSecurityConfig(val userService: MyUserDetailsService, val passwordEncoder: BCryptPasswordEncoder) {
 
-class WebSecurityConfig {
+
     @Bean
-    fun securityFilterChain(http: HttpSecurity):SecurityFilterChain{
+    fun securityFilterChain(http: HttpSecurity,authenticationConfiguration: AuthenticationConfiguration): SecurityFilterChain {
+
+
         http.csrf()
             .disable()
 //            .authorizeHttpRequests().requestMatchers("/users/**").permitAll()
-            .authorizeHttpRequests{auth->
-                auth.requestMatchers("/**").access(hasIpAddress("192.168.0.1"))
-            }
-            .addFilter(AuthenticationFilter())
+            .authorizeHttpRequests().requestMatchers("/**").permitAll()
+            .and()
+
+            .addFilter(authenticationFilter(authenticationConfiguration.authenticationManager))
             .headers().frameOptions().disable()
 
         return http.build()
 
     }
 
-    @Bean //updated version of AuthenticationManagerBuilder, authenticationmanager is already created with userdetailService bean and passwordEncoder bean
-    fun authenticationManager(authenticationConfig:AuthenticationConfiguration):AuthenticationManager =authenticationConfig.authenticationManager
 
+
+    fun authenticationFilter(authenticationManager: AuthenticationManager):UsernamePasswordAuthenticationFilter {
+
+        return AuthenticationFilter().also { it.setAuthenticationManager(authenticationManager) }
+    }
 
     private fun hasIpAddress(ipAddress: String): AuthorizationManager<RequestAuthorizationContext>? {
         val ipAddressMatcher = IpAddressMatcher(ipAddress)
@@ -49,9 +65,7 @@ class WebSecurityConfig {
             AuthorizationDecision(ipAddressMatcher.matches(request))
         }
     }
-    @Bean
-    fun passwordEncoder():BCryptPasswordEncoder{
-        return BCryptPasswordEncoder()
-    }
+
+
 
 }

@@ -16,15 +16,15 @@ import java.time.LocalDateTime
 data class RequestUser(
     @NotNull(message = "Email cannot be null")
     @Email
-    private var email: String,
+    var email: String,
 
     @NotNull(message = "Password cannot be null")
     @Size(min = 8)
-    private var pwd: String,
+    var pwd: String,
 
     @NotNull(message = "name cannot be null")
     @Size(min = 2)
-    private var name: String
+    var name: String
 
 
 )
