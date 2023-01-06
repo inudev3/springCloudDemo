@@ -1,12 +1,13 @@
 package com.example.userservice.security
 
 import com.example.userservice.repository.UserRepository
-import com.example.userservice.service.MyUserDetailsService
+
 import com.example.userservice.service.UserService
 import jakarta.servlet.http.HttpServletRequest
 import lombok.RequiredArgsConstructor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.env.Environment
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authorization.AuthorizationDecision
 import org.springframework.security.authorization.AuthorizationManager
@@ -31,7 +32,7 @@ import java.util.function.Supplier
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
-class WebSecurityConfig(val userService: MyUserDetailsService, val passwordEncoder: BCryptPasswordEncoder) {
+class WebSecurityConfig(val userService: UserService, val passwordEncoder: BCryptPasswordEncoder, val env:Environment) {
 
 
     @Bean
@@ -55,7 +56,7 @@ class WebSecurityConfig(val userService: MyUserDetailsService, val passwordEncod
 
     fun authenticationFilter(authenticationManager: AuthenticationManager):UsernamePasswordAuthenticationFilter {
 
-        return AuthenticationFilter().also { it.setAuthenticationManager(authenticationManager) }
+        return AuthenticationFilter(userService,env).also { it.setAuthenticationManager(authenticationManager) }
     }
 
     private fun hasIpAddress(ipAddress: String): AuthorizationManager<RequestAuthorizationContext>? {

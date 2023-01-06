@@ -39,7 +39,7 @@ class UserController (private val mapper:ModelMapper,private val greeting: Greet
 
     @GetMapping("/users/{userId}")
     fun getUser(@PathVariable("userId") userId:String):ResponseEntity<ResponseUser> =
-        userService.getUserByUserId(userId)?.let { mapper.mapper<UserDto, ResponseUser>(it) }.let{
+        userService.getUserByUserId(userId).let { mapper.mapper<UserDto, ResponseUser>(it) }.let{
             ResponseEntity.status(HttpStatus.OK).body(it)
         }
 
