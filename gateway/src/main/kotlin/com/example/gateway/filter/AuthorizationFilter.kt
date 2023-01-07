@@ -23,6 +23,7 @@ class AuthorizationFilter(val env:Environment) :AbstractGatewayFilterFactory<Aut
 
     val log = logger()
     override fun apply(config: Config?): GatewayFilter {
+
         return GatewayFilter{ exchange,chain->
             val (request,response) = exchange.request to exchange.response
 
