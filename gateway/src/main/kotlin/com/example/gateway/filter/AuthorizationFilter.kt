@@ -27,7 +27,7 @@ class AuthorizationFilter(val env:Environment) :AbstractGatewayFilterFactory<Aut
             val (request,response) = exchange.request to exchange.response
 
             val token=request.headers[HttpHeaders.AUTHORIZATION]?.get(0)?.replace("Bearer", "") ?: return@GatewayFilter onError(exchange, "no authorizatio header", HttpStatus.UNAUTHORIZED)
-            if(!token.isJwtValid()) return@GatewayFilter onError(exchange, "invalid token", HttpStatus.UNAUTHORIZED)
+            if(!token.isJwtValid()) return@GatewayFilter onError(exchange, "invalid gittoken", HttpStatus.UNAUTHORIZED)
             chain.filter(exchange)
         }
     }
