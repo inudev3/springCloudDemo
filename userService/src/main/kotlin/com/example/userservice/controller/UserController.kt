@@ -8,6 +8,7 @@ import com.example.userservice.VO.ResponseUser
 import com.example.userservice.entity.UserEntity
 import com.example.userservice.service.UserService
 import org.slf4j.LoggerFactory
+import org.springframework.core.env.Environment
 
 
 import org.springframework.http.HttpStatus
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/")
-class UserController (private val mapper:ModelMapper,private val greeting: Greeting, private val userService: UserService){
+class UserController (private val mapper:ModelMapper,private val env:Environment,private val greeting: Greeting, private val userService: UserService){
     val log = LoggerFactory.getLogger(UserController::class.java)
     @PostMapping("/users")
     fun createUser(@RequestBody user:RequestUser):ResponseEntity<ResponseUser>{
@@ -45,8 +46,11 @@ class UserController (private val mapper:ModelMapper,private val greeting: Greet
 
     @GetMapping("/health-check")
     fun status():String{
-        log.info("도착!!")
-        return "health Check"
+
+        return """
+            current.profile=${env.getProperty("current.profile")}
+            token.secret=${env.getProperty("token.secret")}
+        """.trimIndent()
     }
 
     @GetMapping("/welcome")

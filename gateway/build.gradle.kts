@@ -42,7 +42,13 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-gson:0.11.5")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
+    implementation ("org.springframework.cloud:spring-cloud-config-client")
+    implementation ("org.springframework.cloud:spring-cloud-starter-config")
+    implementation ("org.springframework.cloud:spring-cloud-starter-bootstrap")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")

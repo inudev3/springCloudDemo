@@ -20,6 +20,11 @@ class FilterConfig {
                 it.rewritePath("/user-service/(?<segment>.*)", "/\${segment}").removeRequestHeader("Cookie")
             }.uri("lb://USER-SERVICE")
         }.route{
+            it.path("/user-service/actuator/**").filters{
+                it.rewritePath("/user-service/(?<segment>.*)", "/\${segment}").removeRequestHeader("Cookie")
+            }.uri("lb://USER-SERVICE")
+        }
+            .route{
             it.path("/user-service/**").and().method(HttpMethod.GET).filters {
                 it.rewritePath("/user-service/(?<segment>.*)", "/\${segment}").removeRequestHeader("Cookie")
                     .filter(authorizationFilter.apply(AuthorizationFilter.Config()))

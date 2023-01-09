@@ -6,10 +6,15 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
+
 spring:
+  config:
+    import:
+      - classpath:/bootstrap.yml
+
   application:
     name: gateway-service
-  cloud:
+
     gateway:
 #      routes:
 #        - id: user-service
@@ -53,5 +58,11 @@ spring:
             baseMessage : Spring Cloud Gateway GlobalFilter
             preLogger: true
             postLogger: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,beans, refresh, httptrace
+
 token:
   secret: userTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserToken

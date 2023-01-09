@@ -1,5 +1,9 @@
 
 spring:
+  config:
+    import:
+      - classpath:/bootstrap.yml
+
   application:
     name: user-service
   h2:
@@ -20,6 +24,12 @@ spring:
     username: sa
     driver-class-name: org.h2.Driver
 
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health,beans
 
 eureka:
   instance:
