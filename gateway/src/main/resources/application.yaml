@@ -11,7 +11,11 @@ spring:
   config:
     import:
       - classpath:/bootstrap.yml
-
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   application:
     name: gateway-service
 
@@ -62,7 +66,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,beans, refresh, httptrace
+        include: health,beans, refresh, httptrace, busrefresh
 
 token:
   secret: userTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserToken

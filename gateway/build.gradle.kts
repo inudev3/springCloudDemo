@@ -44,7 +44,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-
+    implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp:4.0.0")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation ("org.springframework.cloud:spring-cloud-config-client")
     implementation ("org.springframework.cloud:spring-cloud-starter-config")
