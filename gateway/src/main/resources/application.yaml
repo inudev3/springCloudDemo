@@ -9,8 +9,10 @@ eureka:
 
 spring:
   config:
-    import:
-      - classpath:/bootstrap.yml
+    import: "optional:configserver:http://localhost:8888"
+  cloud:
+    config:
+      name: ecommerce
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -68,5 +70,3 @@ management:
       exposure:
         include: health,beans, refresh, httptrace, busrefresh
 
-token:
-  secret: userTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserTokenuserToken
