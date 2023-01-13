@@ -12,5 +12,5 @@ data class UserDto(
     var userId: String?,
     var createdAt: Date?=null,
     var encryptedPwd: String?=null,
-    var orders:ArrayList<ResponseOrder>?=null
+    var orders:List<ResponseOrder>?= mutableListOf()
 )

@@ -8,6 +8,7 @@ data class ResponseOrder (
     var productId: String,
     var qty: Int,
     var unitPrice: Int,
-    var totalPrice: Int,
-    var createdAt: Date
+    var totalPrice: Int?,
+    var userId: String?,
+    var createdAt: Date?
 )

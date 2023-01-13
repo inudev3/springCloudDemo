@@ -1,4 +1,8 @@
 package com.example.orderservice.vo
 
-class RequestOrder {
-}
+
+data class RequestOrder (
+    var productId: String,
+    var qty: Int,
+    var unitPrice: Int,
+)

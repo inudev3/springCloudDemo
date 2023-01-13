@@ -16,7 +16,7 @@ class FilterConfig {
                 it.rewritePath("/user-service/(?<segment>.*)", "/\${segment}").removeRequestHeader("Cookie")
             }.uri("lb://USER-SERVICE")
         } .route{
-            it.path("/user-service/users").and().method(HttpMethod.POST).filters{
+            it.path("/user-service/users/**").and().method(HttpMethod.POST, HttpMethod.GET).filters{
                 it.rewritePath("/user-service/(?<segment>.*)", "/\${segment}").removeRequestHeader("Cookie")
             }.uri("lb://USER-SERVICE")
         }.route{
@@ -37,9 +37,7 @@ class FilterConfig {
             }.uri("lb://CATALOG-SERVICE")
         } .route{
 
-            it.path("/order-service/**").filters {
-                it.rewritePath("/order-service/(?<segment>.*)", "/\${segment}")
-            }.uri("lb://ORDER-SERVICE")
+            it.path("/order-service/**").uri("lb://ORDER-SERVICE")
 
         }.build()
 

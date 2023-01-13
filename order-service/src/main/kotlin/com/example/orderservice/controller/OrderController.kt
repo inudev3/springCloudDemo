@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/order-service")
 class OrderController(private val mapper: ModelMapper, private val orderService: OrderService) {
     @PostMapping("/{userId}/orders")
-    fun createUser(
-        @PathVariable("usesrId") userId: String,
+    fun createOrder(
+        @PathVariable("userId") userId: String,
         @RequestBody orderDetails: RequestOrder
     ): ResponseEntity<ResponseOrder> {
 

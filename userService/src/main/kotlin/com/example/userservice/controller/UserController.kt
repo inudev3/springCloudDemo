@@ -1,7 +1,7 @@
 package com.example.userservice.controller
 
 import com.example.userservice.Mapper.ModelMapper
-import com.example.userservice.VO.Greeting
+
 import com.example.userservice.VO.RequestUser
 import com.example.userservice.dto.UserDto
 import com.example.userservice.VO.ResponseUser
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/")
-class UserController (private val mapper:ModelMapper,private val env:Environment,private val greeting: Greeting, private val userService: UserService){
+class UserController (private val mapper:ModelMapper,private val env:Environment,private val userService: UserService){
     val log = LoggerFactory.getLogger(UserController::class.java)
     @PostMapping("/users")
     fun createUser(@RequestBody user:RequestUser):ResponseEntity<ResponseUser>{
@@ -55,7 +55,7 @@ class UserController (private val mapper:ModelMapper,private val env:Environment
 
     @GetMapping("/welcome")
     fun welcome():String?{
-        return greeting.message
+        return "welcome"
     }
 
 
