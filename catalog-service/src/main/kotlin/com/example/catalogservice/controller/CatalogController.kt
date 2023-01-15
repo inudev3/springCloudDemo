@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/catalog-service")
+@RequestMapping("/")
 class CatalogController (val mapper: ModelMapper, val environment: Environment, val catalogService: CatalogService){
     @GetMapping("/health-check")
     fun status():String{

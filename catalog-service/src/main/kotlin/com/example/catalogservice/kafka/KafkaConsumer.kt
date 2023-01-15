@@ -18,11 +18,15 @@ class KafkaConsumer (private val mapper:ModelMapper,private val catalogRepositor
         log.info(kafkaMessage)
 
 
-        ObjectMapper().readValue(kafkaMessage, object:TypeReference<Map<Any,Any>>(){})?.let {map->
-            val productId = map["productId"] as? String ?: throw RuntimeException("casting failed")
-            catalogRepository.findByProductId(productId).also{it.stock-=(map["qty"] as? Int)?: throw RuntimeException("cast failed")}
-
-        }
+        try{
+            ObjectMapper().readValue(kafkaMessage, object:TypeReference<Map<Any,Any>>(){})?.let {map->
+                val productId = map["productId"] as? String ?: throw RuntimeException("casting failed")
+                catalogRepository.findByProductId(productId).also{
+                    it.stock-=(map["qty"] as? Int)?: throw RuntimeException("cast failed")
+                    catalogRepository.save(it)
+                }
+            }
+        }catch (ex:JsonProcessingException){ex.printStackTrace()}
 
 
     }

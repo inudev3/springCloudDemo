@@ -2,6 +2,8 @@ package com.example.orderservice.controller
 
 import com.example.orderservice.Mapper.ModelMapper
 import com.example.orderservice.dto.OrderDto
+import com.example.orderservice.kafka.CatalogProducer
+import com.example.orderservice.kafka.OrderProducer
 import com.example.orderservice.service.OrderService
 import com.example.orderservice.vo.RequestOrder
 import com.example.orderservice.vo.ResponseOrder
@@ -13,11 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 
 @RestController
 @RequestMapping("/order-service")
-class OrderController(private val mapper: ModelMapper, private val orderService: OrderService) {
+class OrderController(private val orderProducer: OrderProducer,private val catalogProducer: CatalogProducer, private val mapper: ModelMapper, private val orderService: OrderService) {
     @PostMapping("/{userId}/orders")
     fun createOrder(
         @PathVariable("userId") userId: String,
@@ -25,8 +28,10 @@ class OrderController(private val mapper: ModelMapper, private val orderService:
     ): ResponseEntity<ResponseOrder> {
 
         val orderDto = mapper.mapper<RequestOrder, OrderDto>(orderDetails).also { it.userId = userId }
-        return orderDto.let(orderService::createOrder)
+        return orderDto.also { it.orderId=UUID.randomUUID().toString(); it.totalPrice=orderDetails.qty*orderDetails.unitPrice }
             .let {
+                catalogProducer.send("example-catalog-topic", it)
+                orderProducer.send("orders", it)
                 ResponseEntity.status(HttpStatus.OK).body(mapper.mapper(it))
             }
     }

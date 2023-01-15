@@ -15,10 +15,10 @@ class KafKaConsumerConfig {
     @Bean
     fun consumerFactory(): ConsumerFactory<String, String> =
         hashMapOf<String, Any>(
-            ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to "127.0.0.1",
+            ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to "127.0.0.1:9092",
             ConsumerConfig.GROUP_ID_CONFIG to "consumerGroupId",
-            ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class,
-            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class
+            ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
+            ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java
         ).let{DefaultKafkaConsumerFactory(it)}
 
 
