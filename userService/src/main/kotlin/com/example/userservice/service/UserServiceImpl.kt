@@ -12,7 +12,13 @@ import feign.FeignException
 import feign.FeignException.NotFound
 import jakarta.ws.rs.NotFoundException
 import lombok.RequiredArgsConstructor
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.SecurityProperties
+import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory
+import org.springframework.cloud.client.circuitbreaker.ConfigBuilder
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.core.env.Environment
@@ -40,9 +46,11 @@ class UserServiceImpl(
     private val userRepository: UserRepository,
     private val passwordEncoder: BCryptPasswordEncoder,
     private val env: Environment,
-    private val orderServiceClient: OrderServiceClient
+    private val orderServiceClient: OrderServiceClient,
+    private val circuitBreakerFactory: Resilience4JCircuitBreakerFactory
 ) : UserService {
 
+    val log = LoggerFactory.getLogger(UserServiceImpl::class.java)
 
     override fun getUserDetailsByEmail(email: String) =
         userRepository.findByEmail(email)?.let { mapper.mapper<UserEntity, UserDto>(it) }
@@ -60,11 +68,15 @@ class UserServiceImpl(
         val userDto = userEntity.let {
             mapper.mapper<UserEntity, UserDto>(it)
         }
-       try {
-           orderServiceClient.getOrders(userId).let { userDto.orders=it }
-       }catch (e:FeignException){
-           throw NotFoundException()
-       }
+        val circuitBreaker = circuitBreakerFactory.create("circuitBreaker")
+        log.info("Before call order microservice")
+        circuitBreaker.run({orderServiceClient.getOrders(userId)}, { mutableListOf() }).let { userDto.orders=it }
+        log.info("After call order microservice")
+//       try {
+//           orderServiceClient.getOrders(userId).let { userDto.orders=it }
+//       }catch (e:FeignException){
+//           throw NotFoundException()
+//       }
 
         return userDto
     }

@@ -7,6 +7,7 @@ import com.example.userservice.dto.UserDto
 import com.example.userservice.VO.ResponseUser
 import com.example.userservice.entity.UserEntity
 import com.example.userservice.service.UserService
+import io.micrometer.core.annotation.Timed
 import org.slf4j.LoggerFactory
 import org.springframework.core.env.Environment
 
@@ -44,6 +45,7 @@ class UserController (private val mapper:ModelMapper,private val env:Environment
             ResponseEntity.status(HttpStatus.OK).body(it)
         }
 
+    @Timed(value = "users.status", longTask = true)
     @GetMapping("/health-check")
     fun status():String{
 
@@ -53,6 +55,7 @@ class UserController (private val mapper:ModelMapper,private val env:Environment
         """.trimIndent()
     }
 
+    @Timed(value="users.welcome", longTask = true)
     @GetMapping("/welcome")
     fun welcome():String?{
         return "welcome"

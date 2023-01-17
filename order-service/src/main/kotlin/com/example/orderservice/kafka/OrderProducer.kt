@@ -15,7 +15,7 @@ class OrderProducer(private val kafkaTemplate: KafkaTemplate<String, String>) {
 
         Field(
             when (it.returnType.classifier) {
-                String::class -> "string"
+                String::class-> "string"
                 Int::class -> "int32"
                 else -> ""
             }, it.returnType.isMarkedNullable, it.name
@@ -43,8 +43,7 @@ class OrderProducer(private val kafkaTemplate: KafkaTemplate<String, String>) {
             var str = ObjectMapper().let {
                 it.writeValueAsString(KafkaOrderDto(schema = schema, payload = payload))
             }
-            log.info(topic)
-            log.info(str)
+
             kafkaTemplate.send(topic, str)
         } catch (ex: JsonProcessingException) {
             ex.printStackTrace()

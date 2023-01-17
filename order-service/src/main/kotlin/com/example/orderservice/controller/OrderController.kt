@@ -7,6 +7,7 @@ import com.example.orderservice.kafka.OrderProducer
 import com.example.orderservice.service.OrderService
 import com.example.orderservice.vo.RequestOrder
 import com.example.orderservice.vo.ResponseOrder
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,17 +22,20 @@ import java.util.UUID
 @RestController
 @RequestMapping("/order-service")
 class OrderController(private val orderProducer: OrderProducer,private val catalogProducer: CatalogProducer, private val mapper: ModelMapper, private val orderService: OrderService) {
+    val log = LoggerFactory.getLogger(OrderController::class.java)
     @PostMapping("/{userId}/orders")
     fun createOrder(
         @PathVariable("userId") userId: String,
         @RequestBody orderDetails: RequestOrder
     ): ResponseEntity<ResponseOrder> {
-
+        log.info("Before add orders data")
         val orderDto = mapper.mapper<RequestOrder, OrderDto>(orderDetails).also { it.userId = userId }
-        return orderDto.also { it.orderId=UUID.randomUUID().toString(); it.totalPrice=orderDetails.qty*orderDetails.unitPrice }
+        return orderDto.let(orderService::createOrder)
+//            .also { it.orderId=UUID.randomUUID().toString(); it.totalPrice=orderDetails.qty*orderDetails.unitPrice }
             .let {
-                catalogProducer.send("example-catalog-topic", it)
-                orderProducer.send("orders", it)
+                log.info("After add orders data")
+//                catalogProducer.send("example-catalog-topic", it)
+//                orderProducer.send("orders", it)
                 ResponseEntity.status(HttpStatus.OK).body(mapper.mapper(it))
             }
     }

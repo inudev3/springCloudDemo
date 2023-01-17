@@ -15,7 +15,7 @@ spring:
     import: "optional:configserver:http://localhost:8888"
   cloud:
     config:
-      name: ecommerce
+      name: user-service
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -71,5 +71,5 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,beans, refresh, httptrace, busrefresh
+        include: health,beans, refresh, httptrace, busrefresh, prometheus,metrics
 
