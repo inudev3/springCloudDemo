@@ -34,7 +34,7 @@ class OrderController(private val orderProducer: OrderProducer,private val catal
 //            .also { it.orderId=UUID.randomUUID().toString(); it.totalPrice=orderDetails.qty*orderDetails.unitPrice }
             .let {
                 log.info("After add orders data")
-//                catalogProducer.send("example-catalog-topic", it)
+                catalogProducer.send("example-catalog-topic", it)
 //                orderProducer.send("orders", it)
                 ResponseEntity.status(HttpStatus.OK).body(mapper.mapper(it))
             }

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.example"
-version = "0.0.1-SNAPSHOT"
+version = "1.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
@@ -17,6 +17,8 @@ extra["springCloudVersion"] = "2022.0.0"
 
 dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
+    implementation ("org.springframework.cloud:spring-cloud-starter-config")
+    implementation ("org.springframework.cloud:spring-cloud-config-client")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

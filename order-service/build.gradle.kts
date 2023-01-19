@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.example"
-version = "0.0.1-SNAPSHOT"
+version = "1.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 configurations {
@@ -30,7 +30,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.kafka:spring-kafka")
 	implementation("org.mariadb.jdbc:mariadb-java-client")
-
+	implementation("org.springframework.cloud:spring-cloud-starter-config")
+	implementation ("org.springframework.cloud:spring-cloud-config-client")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("io.micrometer:micrometer-registry-prometheus")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -42,6 +43,7 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("org.springframework.cloud:spring-cloud-starter-bus-amqp:4.0.0")
 }
 
 dependencyManagement {

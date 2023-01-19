@@ -1,1 +1,1 @@
-rootProject.name = "springCloud"
+rootProject.name = "user-service"

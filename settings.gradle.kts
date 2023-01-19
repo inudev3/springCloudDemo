@@ -7,5 +7,5 @@
  * in the user manual at https://docs.gradle.org/7.6/userguide/multi_project_builds.html
  */
 
-rootProject.name = "springCloud"
+rootProject.name = "springCloudDemo"
 include("order-service", "userService", "discoveryServer", "gateway","catalog-service", "config-service")

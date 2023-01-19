@@ -20,7 +20,7 @@ class KafkaProducerConfig {
     @Bean
     fun producerFactory(): ProducerFactory<String, String> =
         hashMapOf<String, Any>(
-            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to "127.0.0.1:9092",
+            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to "172.18.0.101:9092",
             ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
             ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java
         ).let{ DefaultKafkaProducerFactory(it) }

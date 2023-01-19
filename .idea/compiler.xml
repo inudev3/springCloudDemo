@@ -7,19 +7,55 @@
         <processorPath useClasspath="false">
           <entry name="$PROJECT_DIR$/../dev/einDeploy/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.24/13a394eed5c4f9efb2a6d956e2086f1d81e857d9/lombok-1.18.24.jar" />
         </processorPath>
-        <module name="springCloud.catalog-service.main" />
-        <module name="springCloud.order-service.main" />
-        <module name="springCloud.gateway.main" />
-        <module name="springCloud.userService.main" />
+        <module name="springCloudDemo.order-service.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="com.example.springCloud" target="17" />
+      <module name="com.example.springCloud.main" target="17" />
+      <module name="com.example.springCloud.test" target="17" />
+      <module name="com.example.springCloudDemo" target="17" />
+      <module name="com.example.springCloudDemo.main" target="17" />
+      <module name="com.example.springCloudDemo.test" target="17" />
+      <module name="discovery-server" target="17" />
+      <module name="discovery-server.main" target="17" />
+      <module name="discovery-server.test" target="17" />
+      <module name="discoveryServer.springCloudDemo" target="17" />
+      <module name="discoveryServer.springCloudDemo.main" target="17" />
+      <module name="discoveryServer.springCloudDemo.test" target="17" />
+      <module name="ecommerce" target="17" />
+      <module name="ecommerce.main" target="17" />
+      <module name="ecommerce.test" target="17" />
       <module name="gateway" target="17" />
       <module name="gateway.main" target="17" />
       <module name="gateway.test" target="17" />
-      <module name="user-service" target="17" />
-      <module name="user-service.main" target="17" />
-      <module name="user-service.test" target="17" />
+      <module name="order-service" target="17" />
+      <module name="order-service.main" target="17" />
+      <module name="order-service.springCloudDemo" target="17" />
+      <module name="order-service.springCloudDemo.main" target="17" />
+      <module name="order-service.springCloudDemo.test" target="17" />
+      <module name="order-service.test" target="17" />
+      <module name="springCloud.catalog-service" target="17" />
+      <module name="springCloud.catalog-service.main" target="17" />
+      <module name="springCloud.catalog-service.test" target="17" />
+      <module name="springCloud.config-service" target="17" />
+      <module name="springCloud.config-service.main" target="17" />
+      <module name="springCloud.config-service.test" target="17" />
+      <module name="springCloud.discoveryServer" target="17" />
+      <module name="springCloud.discoveryServer.main" target="17" />
+      <module name="springCloud.discoveryServer.test" target="17" />
+      <module name="springCloud.gateway" target="17" />
+      <module name="springCloud.gateway.main" target="17" />
+      <module name="springCloud.gateway.test" target="17" />
+      <module name="springCloud.order-service" target="17" />
+      <module name="springCloud.order-service.main" target="17" />
+      <module name="springCloud.order-service.test" target="17" />
+      <module name="springCloud.userService" target="17" />
+      <module name="springCloud.userService.main" target="17" />
+      <module name="springCloud.userService.test" target="17" />
+      <module name="springCloudDemo" target="17" />
+      <module name="springCloudDemo.main" target="17" />
+      <module name="springCloudDemo.test" target="17" />
       <module name="userService" target="17" />
       <module name="userService.main" target="17" />
       <module name="userService.test" target="17" />
